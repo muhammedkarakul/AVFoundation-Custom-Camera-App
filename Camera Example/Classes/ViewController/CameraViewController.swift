@@ -7,28 +7,52 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CameraViewController: UIViewController {
     
-    private lazy var cameraView: UIView = {
+    private let cameraController = CameraController()
+    
+    private lazy var cameraView: CameraView = {
         CameraView()
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        prepareLayout()
+        configureAppearance()
+        linkInteractors()
+        configureCameraController()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func prepareLayout() {
+        view.addSubview(cameraView)
+        cameraView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
     }
-    */
+    
+    private func linkInteractors() {
+        cameraView.delegate = self
+    }
+    
+    private func configureAppearance() {
+        title = "Camera"
+    }
+    
+    private func configureCameraController() {
+        cameraController.prepare { error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            }
+            
+            try? self.cameraController.displayPreview(on: self.cameraView.photoPreviewImageView)
+        }
+    }
+}
 
+extension CameraViewController: CameraViewDelegate {
+    func didTap(takePhotoButton button: UIButton) {
+        
+    }
 }

@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		577ED47C22F9BEB80056E8AF /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577ED47B22F9BEB80056E8AF /* CameraController.swift */; };
 		579F005322F86F23002B6359 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F005222F86F23002B6359 /* AppDelegate.swift */; };
 		579F005A22F86F24002B6359 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 579F005922F86F24002B6359 /* Assets.xcassets */; };
 		579F005D22F86F24002B6359 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 579F005B22F86F24002B6359 /* LaunchScreen.storyboard */; };
@@ -19,6 +20,7 @@
 		1B7E672FA82A10B0DB7B615F /* Pods-Camera Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Camera Example.debug.xcconfig"; path = "Target Support Files/Pods-Camera Example/Pods-Camera Example.debug.xcconfig"; sourceTree = "<group>"; };
 		31936EA3B6E88D1C99AA4CA1 /* Pods_Camera_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Camera_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44514BFD8CC776245A1A3AE4 /* Pods-Camera Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Camera Example.release.xcconfig"; path = "Target Support Files/Pods-Camera Example/Pods-Camera Example.release.xcconfig"; sourceTree = "<group>"; };
+		577ED47B22F9BEB80056E8AF /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		579F004F22F86F23002B6359 /* Camera Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Camera Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		579F005222F86F23002B6359 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		579F005922F86F24002B6359 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -40,6 +42,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		577ED47A22F9BEA50056E8AF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				577ED47B22F9BEB80056E8AF /* CameraController.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		579F004622F86F23002B6359 = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				579F006C22F86FB7002B6359 /* CameraViewController.swift */,
+				577ED47A22F9BEA50056E8AF /* Core */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -141,7 +152,6 @@
 				1B7E672FA82A10B0DB7B615F /* Pods-Camera Example.debug.xcconfig */,
 				44514BFD8CC776245A1A3AE4 /* Pods-Camera Example.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -269,6 +279,7 @@
 			files = (
 				579F006F22F86FC7002B6359 /* CameraView.swift in Sources */,
 				579F005322F86F23002B6359 /* AppDelegate.swift in Sources */,
+				577ED47C22F9BEB80056E8AF /* CameraController.swift in Sources */,
 				579F006D22F86FB7002B6359 /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,7 +422,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P3PB4F7F3W;
 				INFOPLIST_FILE = "$(SRCROOT)/Camera Example/Support/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -431,7 +442,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P3PB4F7F3W;
 				INFOPLIST_FILE = "$(SRCROOT)/Camera Example/Support/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

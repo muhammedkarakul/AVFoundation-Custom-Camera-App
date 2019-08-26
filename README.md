@@ -9,7 +9,7 @@ Steps
 5. Run project(You need a physical iOS device!)
 
 ## Preview
-<img src="preview.png">
+<img src="preview.png" >
 
 ## Resource
 <a href="https://www.appcoda.com/avfoundation-swift-guide/" target="_blank">Appcoda Building a Full Screen Camera App Using AVFoundation Tutorial</a>

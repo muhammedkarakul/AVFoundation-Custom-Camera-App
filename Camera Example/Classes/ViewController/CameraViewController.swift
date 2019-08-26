@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Photos
+import SVProgressHUD
 
 class CameraViewController: UIViewController {
     
@@ -46,7 +48,7 @@ class CameraViewController: UIViewController {
     private func configureCameraController() {
         cameraController.prepare { error in
             if let error = error {
-                print("Error: \(error.localizedDescription)")
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
             
             try? self.cameraController.displayPreview(on: self.cameraView)
@@ -56,15 +58,45 @@ class CameraViewController: UIViewController {
 
 extension CameraViewController: CameraViewDelegate {
     func cameraView(_ cameraView: CameraView, didTapTakePhotoButton button: UIButton) {
-        print("TAKE PHOTO BUTTON TAPPED")
+        cameraController.captureImage {(image, error) in
+            guard let image = image else {
+                SVProgressHUD.showError(withStatus: error?.localizedDescription ?? "Image capture error")
+                return
+            }
+            
+            try? PHPhotoLibrary.shared().performChangesAndWait {
+                PHAssetChangeRequest.creationRequestForAsset(from: image)
+            }
+            
+            SVProgressHUD.showSuccess(withStatus: "Photo saved to gallery.")
+        }
     }
     
     func cameraView(_ cameraView: CameraView, didTapFlashButton button: UIButton) {
-        print("FLASH BUTTON TAPPED")
+        if cameraController.flashMode == .on {
+            cameraController.flashMode = .off
+            button.setImage(UIImage(named: "Flash Off Icon"), for: .normal)
+        } else {
+            cameraController.flashMode = .on
+            button.setImage(UIImage(named: "Flash On Icon"), for: .normal)
+        }
     }
     
     func cameraView(_ cameraView: CameraView, didTapSwitchCameraButton button: UIButton) {
-        print("SWITCH CAMERA BUTTON TAPPED")
+        do {
+            try cameraController.switchCameras()
+        } catch {
+            SVProgressHUD.showError(withStatus: error.localizedDescription)
+        }
+        
+        switch cameraController.currentCameraPosition {
+        case .some(.front):
+            button.setImage(UIImage(named: "Front Camera Icon"), for: .normal)
+        case .some(.rear):
+            button.setImage(UIImage(named: "Rear Camera Icon"), for: .normal)
+        case .none:
+            return
+        }
     }
     
     func cameraView(_ cameraView: CameraView, didTapPhotoCameraButton button: UIButton) {

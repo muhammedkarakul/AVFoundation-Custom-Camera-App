@@ -39,28 +39,32 @@ final class CameraView: UIView {
     
     private lazy var flashButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
+        button.tintColor = .white
+        button.setImage(UIImage(named: "Flash Off Icon"), for: .normal)
         button.addTarget(self, action: #selector(didTap(flashButton:)), for: .touchUpInside)
         return button
     }()
     
     private lazy var switchCameraButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
+        button.tintColor = .white
+        button.setImage(UIImage(named: "Front Camera Icon"), for: .normal)
         button.addTarget(self, action: #selector(didTap(switchCameraButton:)), for: .touchUpInside)
         return button
     }()
     
     private lazy var photoCameraButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
+        button.tintColor = .white
+        button.setImage(UIImage(named: "Photo Camera Icon"), for: .normal)
         button.addTarget(self, action: #selector(didTap(photoCameraButton:)), for: .touchUpInside)
         return button
     }()
     
     private lazy var videoCameraButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
+        button.tintColor = .white
+        button.setImage(UIImage(named: "Video Camera Icon"), for: .normal)
         button.addTarget(self, action: #selector(didTap(videoCameraButton:)), for: .touchUpInside)
         return button
     }()

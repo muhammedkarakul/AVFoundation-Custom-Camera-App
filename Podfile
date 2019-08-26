@@ -7,5 +7,6 @@ target 'Camera Example' do
 
   # Pods for Camera Example
     pod 'SnapKit'
+    pod 'SVProgressHUD'
 
 end

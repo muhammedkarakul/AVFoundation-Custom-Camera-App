@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 class CameraViewController: UIViewController {
     
@@ -16,6 +15,10 @@ class CameraViewController: UIViewController {
     private lazy var cameraView: CameraView = {
         CameraView()
     }()
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +26,10 @@ class CameraViewController: UIViewController {
         configureAppearance()
         linkInteractors()
         configureCameraController()
+    }
+    
+    private func configureAppearance() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func prepareLayout() {
@@ -36,23 +43,35 @@ class CameraViewController: UIViewController {
         cameraView.delegate = self
     }
     
-    private func configureAppearance() {
-        title = "Camera"
-    }
-    
     private func configureCameraController() {
         cameraController.prepare { error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
             }
             
-            try? self.cameraController.displayPreview(on: self.cameraView.photoPreviewImageView)
+            try? self.cameraController.displayPreview(on: self.cameraView)
         }
     }
 }
 
 extension CameraViewController: CameraViewDelegate {
-    func didTap(takePhotoButton button: UIButton) {
-        
+    func cameraView(_ cameraView: CameraView, didTapTakePhotoButton button: UIButton) {
+        print("TAKE PHOTO BUTTON TAPPED")
+    }
+    
+    func cameraView(_ cameraView: CameraView, didTapFlashButton button: UIButton) {
+        print("FLASH BUTTON TAPPED")
+    }
+    
+    func cameraView(_ cameraView: CameraView, didTapSwitchCameraButton button: UIButton) {
+        print("SWITCH CAMERA BUTTON TAPPED")
+    }
+    
+    func cameraView(_ cameraView: CameraView, didTapPhotoCameraButton button: UIButton) {
+        print("PHOTO CAMERA BUTTON TAPPED")
+    }
+    
+    func cameraView(_ cameraView: CameraView, didTapVideoCameraButton button: UIButton) {
+        print("VIDEO CAMERA BUTTON TAPPED")
     }
 }

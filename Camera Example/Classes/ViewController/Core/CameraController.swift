@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class CameraController {
+final class CameraController {
     private var frontCamera: AVCaptureDevice?
     private var rearCamera: AVCaptureDevice?
     private var captureSession: AVCaptureSession?
@@ -28,7 +28,11 @@ extension CameraController {
         }
         
         func configureCaptureDevices() throws {
-            let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified)
+            let session = AVCaptureDevice.DiscoverySession(
+                deviceTypes: [.builtInWideAngleCamera],
+                mediaType: .video,
+                position: .unspecified
+            )
             let cameras = session.devices.compactMap { $0 }
             
             for camera in cameras {
@@ -45,23 +49,31 @@ extension CameraController {
                 }
             }
         }
-            
+        
         func configureDeviceInputs() throws {
             guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
             
             if let rearCamera = self.rearCamera {
                 self.rearCameraInput = try AVCaptureDeviceInput(device: rearCamera)
                 
-                if captureSession.canAddInput(self.rearCameraInput!) {
-                    captureSession.addInput(self.rearCameraInput!)
+                guard let rearCameraInput = self.rearCameraInput else {
+                    return
+                }
+                
+                if captureSession.canAddInput(rearCameraInput) {
+                    captureSession.addInput(rearCameraInput)
                 }
                 
                 self.currentCameraPosition = .rear
             } else if let frontCamera = self.frontCamera {
                 self.frontCameraInput = try AVCaptureDeviceInput(device: frontCamera)
                 
-                if captureSession.canAddInput(self.frontCameraInput!) {
-                    captureSession.addInput(self.frontCameraInput!)
+                guard let frontCameraInput = self.frontCameraInput else {
+                    return
+                }
+                
+                if captureSession.canAddInput(frontCameraInput) {
+                    captureSession.addInput(frontCameraInput)
                 } else {
                     throw CameraControllerError.inputsAreInvalid
                 }
@@ -76,9 +88,17 @@ extension CameraController {
             guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
             
             self.photoOutput = AVCapturePhotoOutput()
-            self.photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecJPEG])], completionHandler: nil)
             
-            if captureSession.canAddOutput(self.photoOutput!) { captureSession.addOutput(self.photoOutput!) }
+            guard let photoOutput = self.photoOutput else {
+                return
+            }
+            
+            photoOutput.setPreparedPhotoSettingsArray(
+                [AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])],
+                completionHandler: nil
+            )
+            
+            if captureSession.canAddOutput(photoOutput) { captureSession.addOutput(photoOutput) }
             
             captureSession.startRunning()
         }
@@ -103,14 +123,20 @@ extension CameraController {
     }
     
     func displayPreview(on view: UIView) throws {
-        guard let captureSession = self.captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
+        guard let captureSession = self.captureSession, captureSession.isRunning else {
+            throw CameraControllerError.captureSessionIsMissing
+        }
         
         self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         self.previewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.previewLayer?.connection?.videoOrientation = .portrait
         
-        view.layer.insertSublayer(self.previewLayer!, at: 0)
-        self.previewLayer?.frame = view.frame
+        guard let previewLayer = self.previewLayer else {
+            return
+        }
+        
+        view.layer.insertSublayer(previewLayer, at: 0)
+        previewLayer.frame = view.frame
     }
 }
 
